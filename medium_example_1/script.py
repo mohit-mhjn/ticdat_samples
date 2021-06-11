@@ -1,7 +1,11 @@
 """
 This is an example integrity check that is developed with ticdat. This is an
 illustration from my medium blog. The readers/others can take this up and
-feel free to play around with.
+feel free to play around with the code.
+
+Recall from the content on medium, you need to focus on two things -
+1. Defining the schema
+2. Defining the rules
 
 Run this script by passing the following command on your terminal or whatever
 way you're used to running .py files. In the original version of "data_file.csv"
@@ -19,13 +23,13 @@ from ticdat import PanDatFactory, standard_main
 from pprint import pprint
 import pandas as pd
 
-# Defining the Schema >>
+# 1. Defining the Schema >>
 input_schema = PanDatFactory(
     survey = [["SSN"],["Mobile No.", "Sex", "Date-of-Birth",
                        "Hand-preference", "Income"]]
 )
 
-# Defining the data rules >>
+# 2. Defining the data rules >>
 input_schema.set_data_type("survey", "SSN",
                            number_allowed=True,
                            min = 100000000,
@@ -59,6 +63,7 @@ input_schema.set_default_value("survey", "Mobile No.", 9999999999)
 
 
 # --- Following stuff is relevant to the execution of this script ---
+# You can still see it, the context may be incomplete
 solution_schema = PanDatFactory(
     table = [["Key"],["Values"]]
 )
