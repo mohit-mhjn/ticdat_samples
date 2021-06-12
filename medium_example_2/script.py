@@ -1,20 +1,25 @@
 """
+# Example-2
+
 This is an example integrity check that is developed with ticdat. This is an
 illustration from my medium blog. The readers/others can take this up and
 feel free to play around with the code.
 
 Recall from the content on medium, you need to focus on two things -
-1. Defining the schema
-2. Defining the rules
+1. *Defining the schema*
+2. *Defining the rules*
 
 Run this script by passing the following command on your terminal or whatever
-way you're used to running .py files. In the original version of data files
+way you're used to running .py files. In the original version of data
 I have intentionally induced some data errors, so that you could see how ticdat
-highlights the data integrity failures.
+highlights the data integrity failures. Beyond example-1 this example contains
+`add_data_row_predicate` and `add_foreign_key` methods.
 
- python3 script.py -i ./data
+```
+python3 script.py -i ./data
+```
 
-You should see duplicates, data_type_failures printed in the program output.
+You should see duplicates, data_type_failures, foreign key failures and data row failures printed in the program output.
 Try to resolve the integrity fails or induce your own to get comfortable with
 these ways.
 """
@@ -26,10 +31,28 @@ import pandas as pd
 # 1. Defining the Schema >>
 input_schema = PanDatFactory(
     survey = [["SSN"],["Mobile No.", "Sex", "Date-of-Birth",
-                       "Hand-preference", "Income"]]
+                       "Hand-preference", "Income", "Monthly Expenditure"]],
+    premium = [["SSN"],["Date Registered","Tenure"]]
 )
 
 # 2. Defining the data rules >>
+# Highlights of this example --
+input_schema.add_foreign_key("survey","premium",["SSN","SSN"])
+
+input_schema.add_data_row_predicate(
+"survey",
+lambda row: row["Monthly Expenditure"] <= row["Income"],
+predicate_name = "Expense cannot be grater than income",
+predicate_failure_response = "Error Message")
+
+
+# Beyond everything is same as in example_1
+input_schema.set_data_type("premium", "SSN",
+                           number_allowed=True,
+                           min = 100000000,
+                           max = 999999999,
+                           must_be_int = True)
+
 input_schema.set_data_type("survey", "SSN",
                            number_allowed=True,
                            min = 100000000,

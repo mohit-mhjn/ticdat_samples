@@ -20,4 +20,5 @@ pip install ticdat
 Each of the examples have their independent directories and the sample input files are included.
 
 - `medium_example_1` illustrates the basic data integrity setup as described here.
-- Working on next blog.
+- `medium_example_2` builds further on the example-1 to illustrate more things regarding data rules.
+- More examples coming soon.
