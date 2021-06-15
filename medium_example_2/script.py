@@ -42,8 +42,7 @@ input_schema.add_foreign_key("survey","premium",["SSN","SSN"])
 input_schema.add_data_row_predicate(
 "survey",
 lambda row: row["Monthly Expenditure"] <= row["Income"],
-predicate_name = "Expense cannot be grater than income",
-predicate_failure_response = "Error Message")
+predicate_name = "Expense cannot be grater than income")
 
 
 # Beyond everything is same as in example_1
